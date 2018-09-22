@@ -1,4 +1,4 @@
-#INSTALL
+INSTALL
 
 To run the application in the system should be installed
 - MySql server
