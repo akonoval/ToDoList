@@ -1,0 +1,25 @@
+.list-table {
+    width: 100%;
+    max-width: 550px;
+}
+
+.show-wide {
+    width: 100%;
+}
+
+div.no-align {
+    text-align: left;
+    margin-left: 50px;
+}
+
+tr.new-task {
+    padding-bottom: 10px;
+}
+
+.new-task input {
+    width: 100%;
+}
+
+.input-mode {
+    padding-bottom: 10px;
+}

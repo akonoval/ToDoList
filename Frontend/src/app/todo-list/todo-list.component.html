@@ -1,0 +1,117 @@
+<link
+    data-require="bootstrap-css@3.3.6"
+    data-semver="3.3.6"
+    rel="stylesheet" 
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+
+<div class="no-align">
+    <!– Show/Hide compleated tasks –>
+    <h3>Compleated tasks: 
+        <div class="btn-group" role="group" aria-label="...">
+            <button 
+                (click)="changeView()" 
+                [ngClass]="{active:showCompleated == true}" 
+                type="button"
+                class="btn btn-default">
+                Show
+            </button>
+            <button 
+                (click)="changeView()" 
+                [ngClass]="{active:showCompleated == false}" 
+                type="button" 
+                class="btn btn-default">
+                Hide
+            </button>
+        </div>
+    </h3>
+
+</div>
+
+<table class="list-table">
+    <tbody>
+        <!– Create new task button –>
+        <tr class="new-task">
+            <td> 
+                <button 
+                    [ngClass]="{'disabled': createMode}"
+                    (click)="changeMode()" 
+                    type="button" 
+                    class="btn btn-primary btn-lg">
+                    <span class="glyphicon glyphicon-plus">
+                    </span>
+                </button>
+            </td>
+            <td> 
+                <input 
+                    [(ngModel)]="searchText" 
+                    class="input-lenght"
+                    placeholder="search task ...">
+            </td>
+        </tr>
+        
+        <!– Create mode input –>
+        <tr class="input-mode"
+            *ngIf="createMode">
+            <td> 
+                <button 
+                    (click)="addTask(taskName.value); taskName.value=''" 
+                    type="button" 
+                    class="btn btn-info btn-lg">
+                    <span class="glyphicon glyphicon-save">
+                    </span>
+                </button>
+            </td>
+            <td>
+                <input 
+                    #taskName class="show-wide"
+                    placeholder="type new task ..."/>
+            </td>
+            <!– Task list –>
+            <td>
+                <button 
+                    (click)="changeMode()" 
+                    type="button" 
+                    class="btn btn-warning btn-lg">
+                    <span class="glyphicon glyphicon-remove">
+                    </span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngFor="let item of listData | filter : searchText; let i=index">
+            <td *ngIf="showCompleated || item.deleted == 0">
+                <button 
+                    (click)="changeStatus(item)" 
+                    class="btn btn-lg"
+                    [ngClass]="{
+                        'btn-info': item.deleted != 1,
+                        'btn-success': item.deleted == 1
+                    }">
+                    <span class="glyphicon" 
+                          [ngClass]="{
+                                'glyphicon-ok': item.deleted != 1,
+                                'glyphicon-repeat': item.deleted == 1
+                          }">
+                    </span> 
+                </button>
+            </td>
+            <td *ngIf="showCompleated || item.deleted == 0">
+                <div>
+                        <h3 [ngStyle]="{
+                                'text-decoration': item.deleted != 1 ?  
+                                'none' : 'line-through'
+                            }">{{item.name}}
+                        </h3>
+                </div>
+            </td>
+            <td  *ngIf="showCompleated || item.deleted == 0">
+                <button 
+                    (click)="deleteTask(item, i)" 
+                    type="button" 
+                    class="btn btn-danger btn-lg">
+                    <span class="glyphicon glyphicon-remove">
+                    </span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+ </table>
